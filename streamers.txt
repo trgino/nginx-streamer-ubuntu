@@ -1,0 +1,33 @@
+# INSTALL
+
+sudo apt-get install v4l2-utils vlc ffmpeg
+sudo add-apt-repository ppa:obsproject/obs-studio
+sudo apt-get update && sudo apt-get install obs-studio
+
+# VLC
+
+vlc v4l2:///dev/video0
+
+# FFMPEG
+
+# https://trac.ffmpeg.org/wiki/Capture/ALSA
+# https://trac.ffmpeg.org/wiki/Capture/Desktop
+
+ffmpeg -f x11grab -follow_mouse centered -r 25 -s cif -i :0.0 -f flv rtmp://192.168.1.10:1935/live/2
+ffmpeg -i /dev/video0 -f alsa -i default -v:c libx264 -preset veryfast -a:c mp3lame -ac 2 -ar 44100 -f flv rtmp://192.168.1.10:1935/live/2
+
+ffmpeg -y -nostats -hide_banner -loglevel error -i /dev/video0 -f alsa -i default -c:v h264 -pix_fmt yuv420p -b:v 128k -s 640x480 -crf 30 -r 25 -preset:v ultrafast -strict experimental -c:a aac -ac 2 -b:a 64k -f mp4 -threads 1 x.mp4
+
+ffmpeg -y -nostats -hide_banner -loglevel error -i /dev/video0 -f alsa -i default -c:v h264 -pix_fmt yuv420p -b:v 128k -s 640x480 -crf 30 -r 25 -preset:v ultrafast -strict experimental -c:a aac -ac 2 -b:a 64k -f flv -threads 1 rtmp://192.168.1.10:1935/live/2
+
+ffmpeg -y -nostats -hide_banner -loglevel error -i ~/VOD/1.avi -c:v h264 -pix_fmt yuv420p -b:v 1024k -crf 30 -r 30 -preset:v ultrafast -strict experimental -c:a aac -ac 2 -b:a 64k -f flv rtmp://192.168.1.10:1935/live/1
+
+ffmpeg -y -nostats -hide_banner -loglevel error -i ~/VOD/2.mkv -c:v h264 -pix_fmt yuv420p -b:v 1024k -crf 30 -r 30 -preset:v ultrafast -strict experimental -c:a aac -ac 2 -b:a 64k -f flv -threads 1 rtmp://192.168.1.10:1935/live/2
+
+# Open Broadcaster Studio (GUI for ffmpeg)
+
+# https://github.com/jp9000/obs-studio/wiki/Install-Instructions#linux
+
+# Nimble Streamer
+
+# https://es.wmspanel.com/nimble

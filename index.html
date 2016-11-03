@@ -1,0 +1,91 @@
+<html>
+
+<head>
+
+	<!-- VideoJS -->
+	<link href="http://vjs.zencdn.net/5.11.9/video-js.css" rel="stylesheet">
+	<script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+	<script src="http://vjs.zencdn.net/5.11.9/video.js"></script>
+
+	<!-- HLS -->
+ 	<script src="https://cdn.jsdelivr.net/hls.js/latest/hls.min.js"></script>
+</head>
+
+<body>
+
+<div align="center">
+
+<a href="/wordpress">Wordpress</a>
+
+<br>
+<br>
+
+<!--
+rtmp://192.168.1.10:1935/live/2
+<br>
+rtmp://192.168.1.10:1935/mobile/2
+<br>
+http://192.168.1.10/live/2/index.m3u8
+<br>
+http://192.168.1.10/mobile/2/index.m3u8
+<br>
+http://192.168.1.10/rtmpstats/
+<br>
+http://192.168.1.10/nclients?app=mobile&name=2
+-->
+
+<video id="live" controls></video>
+<script>
+  if(Hls.isSupported()) {
+    var video = document.getElementById('live');
+    var hls = new Hls();
+    hls.loadSource('http://192.168.1.10/show/2.m3u8');
+    hls.attachMedia(video);
+    hls.on(Hls.Events.MANIFEST_PARSED,function() {
+      video.play();
+  });
+ }
+</script>
+
+<!--
+<video id="mobile" controls></video>
+<script>
+  if(Hls.isSupported() && false) {
+    var video = document.getElementById('mobile');
+    var hls = new Hls();
+    hls.loadSource('http://192.168.1.10/mobile/2');
+    hls.attachMedia(video);
+    hls.on(Hls.Events.MANIFEST_PARSED,function() {
+      video.play();
+  });
+ }
+</script>
+-->
+
+<br>
+<br>
+
+<video controls>
+	<source src="http://192.168.1.10/vod/small.mp4" type="video/mp4"> 
+</video>
+
+<br>
+<br>
+
+<video id="my-video" class="video-js" controls width="640" height="480" poster="/small.png" data-setup="{}">
+	<source src="rtmp://192.168.1.10:1935/vod/2-1477858094-2016-10-30-1608.flv" type="rtmp/flv"> 
+	<!-- FLV RTMP -->
+	<!-- 
+	Sizing issue with FLV
+	<source src="http://192.168.1.10/vod/2-1477858094-2016-10-30-1608.flv" type="video/flv">
+	-->
+	<!-- MP4 RTMP 
+	<source src="rtmp://192.168.1.10:1935/vod/small.mp4" type="rtmp/mp4"> 
+	-->
+</video>
+
+</div>
+
+</body>
+
+</html>
